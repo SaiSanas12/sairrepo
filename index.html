@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">
+        <h3>Chat Application</h3>
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="mr">Marathi</option>
+            <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
+        </select>
+    </div>
+    <div class="chat-box" id="chat-box"></div>
+    <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Type your message..." />
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<script>
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatBox = document.getElementById('chat-box');
+
+    // Create WebSocket connection
+    const socket = new WebSocket('ws://localhost:7777');
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+        console.log('Connected to WebSocket server');
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('message', 'received');
+        newMessage.innerHTML = `<p>${event.data}</p>`;
+        chatBox.appendChild(newMessage);
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+    });
+
+    // Send message to WebSocket server
+    sendBtn.addEventListener('click', function() {
+        const messageText = messageInput.value;
+        if (messageText.trim() !== "") {
+            socket.send(messageText); // Send message to WebSocket server
+            const newMessage = document.createElement('div');
+            newMessage.classList.add('message', 'sent');
+            newMessage.innerHTML = `<p>${messageText}</p>`;
+            chatBox.appendChild(newMessage);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+            messageInput.value = ''; // Clear the input field
+        }
+    });
+</script>
+</body>
+</html>

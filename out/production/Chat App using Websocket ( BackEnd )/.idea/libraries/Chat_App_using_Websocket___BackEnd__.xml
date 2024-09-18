@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Chat App using Websocket ( BackEnd )">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$" />
+      <root url="jar://$PROJECT_DIR$/../slf4j-api-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../slf4j-simple-2.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$" />
+    </SOURCES>
+  </library>
+</component>
